@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Blueblue</string>
+    <string name="sms_login">短信验证码登录</string>
+    <string name="phone_number">手机号码</string>
+    <string name="please_input_phone">请输入手机号码</string>
+    <string name="verify_code">图片验证码</string>
+    <string name="please_input_pic_veri">请输入图片验证码</string>
+    <string name="sms_verify_code">短信验证码</string>
+    <string name="please_input_sms">请输入短信验证码</string>
+    <string name="ssdk_cmcc_get_vercode">获取验证码</string>
+    <string name="login">登录</string>
+    <string name="pw_login">账号密码登录</string>
+    <string name="try_pw_login">使用账号密码登录</string>
+    <string name="user_name">账号</string>
+    <string name="input_phone_or_email">请输入手机号或邮箱</string>
+    <string name="password">密码</string>
+    <string name="please_input_password">请输入密码</string>
+    <string name="try_sms_login">切换到短信验证码登录</string>
+    <string name="start">开始</string>
 </resources>

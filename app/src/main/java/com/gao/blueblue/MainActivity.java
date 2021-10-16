@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        LCObject testObject = new LCObject("TestObject");
-        testObject.put("words", "Hello world!");
-        testObject.saveInBackground().blockingSubscribe();
+        //LCObject testObject = new LCObject("TestObject");
+        //testObject.put("words", "Hello world!");
+        //testObject.saveInBackground().blockingSubscribe();
     }
 }
