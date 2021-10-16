@@ -13,16 +13,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Blueblue">
+
         <activity android:name=".ui.activity.login.RegisterActivity"></activity>
-        <activity android:name=".ui.activity.start.StartActivity" />
+
         <activity android:name=".ui.activity.login.LoginByPWActivity" />
+
         <activity android:name=".ui.activity.login.LoginBySMSActivity" />
+
         <activity android:name=".ui.activity.base.BaseActivity" />
+
         <activity android:name=".ui.activity.login.LoginTypeActivity" />
-        <activity android:name=".MainActivity">
+
+        <activity android:name=".MainActivity"/>
+
+        <activity android:name=".ui.activity.start.StartActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
