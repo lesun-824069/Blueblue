@@ -8,4 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="devide_line">#1a100000</color>
+    <color name="red_selected">#dd444b</color>
+    <color name="toast_successed">#4eb913</color>
+    <color name="toast_faild">#fc5b5b</color>
+    <color name="warning_msg">#F5AC42</color>
 </resources>

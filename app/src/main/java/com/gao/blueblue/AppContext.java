@@ -1,6 +1,7 @@
 package com.gao.blueblue;
 
 import android.app.Application;
+import android.content.Context;
 
 import cn.leancloud.LeanCloud;
 
@@ -12,10 +13,16 @@ import cn.leancloud.LeanCloud;
  **/
 public class AppContext extends Application {
 
+    public static AppContext appContext;
+    public int tabIndex = 0;
+    private static Context mContext;
+
+
     @Override
     public void onCreate() {
         super.onCreate();
 
+        mContext = getApplicationContext();
         LeanCloud.initialize(
                 this,
                 "ImIPa8yY06Mjs8WpsdllXXKk-gzGzoHsz",
@@ -23,4 +30,13 @@ public class AppContext extends Application {
                 "https://imipa8yy.lc-cn-n1-shared.com");
 
     }
+
+    public static Context getContext() {
+        return mContext;
+    }
+
+    public static AppContext getInstance() {
+        return appContext;
+    }
+
 }
