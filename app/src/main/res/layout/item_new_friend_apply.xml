@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_item_root"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp">
+
+        <ImageView
+            android:id="@+id/iv_applicant_head_icon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginVertical="@dimen/dp_10"
+            android:layout_marginStart="15dp"
+            android:src="@mipmap/icon_head_img" />
+
+        <TextView
+            android:id="@+id/tv_applicant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@+id/iv_applicant_head_icon"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/sp_16"
+            android:textColor="#323233"
+            android:text="@string/unknown" />
+
+        <TextView
+            android:id="@+id/tv_agree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/shape_new_member_apply_agree"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="5dp"
+            android:text="@string/agree"
+            android:textColor="#1890FF"
+            android:textSize="@dimen/sp_16" />
+
+        <TextView
+            android:id="@+id/tv_reject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_toStartOf="@+id/tv_agree"
+            android:background="@drawable/shape_new_member_apply_reject"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="5dp"
+            android:text="@string/reject"
+            android:textColor="#FF000D"
+            android:textSize="@dimen/sp_16" />
+
+    </RelativeLayout>
+
+</LinearLayout>

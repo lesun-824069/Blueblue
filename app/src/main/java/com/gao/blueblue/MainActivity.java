@@ -1,10 +1,10 @@
 package com.gao.blueblue;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -12,9 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gao.blueblue.adapter.FragmentTabAdapter;
+import com.gao.blueblue.provider.UserProvider;
 import com.gao.blueblue.ui.activity.base.BaseActivity;
-import com.gao.blueblue.ui.fragment.ChatFragment;
-import com.gao.blueblue.ui.fragment.MarketsFragment;
+import com.gao.blueblue.ui.fragment.AddressBookFragment;
 import com.gao.blueblue.ui.fragment.MineFragment;
 import com.gao.blueblue.ui.fragment.NewsFragment;
 import com.gao.blueblue.ui.fragment.PublishFragment;
@@ -22,6 +22,16 @@ import com.gao.blueblue.ui.view.TabView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.leancloud.chatkit.LCChatKit;
+import cn.leancloud.chatkit.LCChatKitUser;
+import cn.leancloud.chatkit.activity.LCIMConversationActivity;
+import cn.leancloud.chatkit.activity.LCIMConversationListFragment;
+import cn.leancloud.chatkit.utils.LCIMConstants;
+import cn.leancloud.im.v2.LCIMChatRoom;
+import cn.leancloud.im.v2.LCIMConversation;
+import cn.leancloud.im.v2.LCIMException;
+import cn.leancloud.im.v2.callback.LCIMConversationCreatedCallback;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -80,12 +90,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        //LCObject testObject = new LCObject("TestObject");
-        //testObject.put("words", "Hello world!");
-        //testObject.saveInBackground().blockingSubscribe();
-
-
         bindViewSetOnClickListener();
         fragments = getFragments();
         tabAdapter = new FragmentTabAdapter(this, fragments, R.id.tab_content);
@@ -98,16 +102,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         fl_content = findViewById(R.id.tab_content);//中间Content
 
-        // 新闻
-        LinearLayout ll_news = findViewById(R.id.ll_tab_news);
-        ImageView img_news = findViewById(R.id.img_tab_news);
-        TextView tv_news = findViewById(R.id.tv_tab_news);
-        tab_news = new TabView();
-        tab_news.setView(img_news, tv_news, ll_news);
-        tab_news.setIcon(R.mipmap.icon_news_normal, R.mipmap.icon_news_select);
-        tab_news.setTextColor(getResources().getColor(R.color.black), getResources().getColor(R.color.red_selected));
-        tab_news.setOnClickListener(this);
-
 
         // 会话
         LinearLayout ll_chat = findViewById(R.id.ll_tab_chat);
@@ -116,8 +110,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tab_chat = new TabView();
         tab_chat.setView(img_chat, tv_chat, ll_chat);
         tab_chat.setIcon(R.mipmap.icon_chat_normal, R.mipmap.icon_chat_select);
-        tab_chat.setTextColor(getResources().getColor(R.color.black), getResources().getColor(R.color.red_selected));
+        tab_chat.setTextColor(Color.parseColor("#FFFFFFFF"),Color.parseColor("#d81e06"));
         tab_chat.setOnClickListener(this);
+
+        //通讯录
+        LinearLayout ll_news = findViewById(R.id.ll_tab_address_book);
+        ImageView img_news = findViewById(R.id.img_tab_address_book);
+        TextView tv_news = findViewById(R.id.tv_tab_address_book);
+        tab_news = new TabView();
+        tab_news.setView(img_news, tv_news, ll_news);
+        tab_news.setIcon(R.mipmap.icon_address_book_normal, R.mipmap.icon_address_book_select);
+        tab_news.setTextColor(Color.parseColor("#FFFFFFFF"),Color.parseColor("#d81e06"));
+        tab_news.setOnClickListener(this);
 
         // 发布
         ImageView img_publish = findViewById(R.id.img_tab_publish);
@@ -126,7 +130,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tab_publish = new TabView();
         tab_publish.setView(img_publish, tv_publish, ll_publish);
         tab_publish.setIcon(R.mipmap.icon_publish_normal, R.mipmap.icon_publish_select);
-        tab_publish.setTextColor(getResources().getColor(R.color.black), getResources().getColor(R.color.red_selected));
+        tab_publish.setTextColor(Color.parseColor("#FFFFFFFF"),Color.parseColor("#d81e06"));
         tab_publish.setOnClickListener(this);
 
         // 市场
@@ -136,7 +140,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tab_markets = new TabView();
         tab_markets.setView(img_markets, tv_markets, ll_markets);
         tab_markets.setIcon(R.mipmap.icon_markets_normal, R.mipmap.icon_markets_select);
-        tab_markets.setTextColor(getResources().getColor(R.color.black), getResources().getColor(R.color.red_selected));
+        tab_markets.setTextColor(Color.parseColor("#FFFFFFFF"),Color.parseColor("#d81e06"));
         tab_markets.setOnClickListener(this);
 
         // 我的主页
@@ -145,8 +149,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         TextView tv_mine = findViewById(R.id.tv_tab_mine);
         tab_mine = new TabView();
         tab_mine.setView(img_mine, tv_mine, ll_mine);
-        tab_mine.setIcon(R.mipmap.icon_mine_normal, R.mipmap.icon_mine_select);
-        tab_mine.setTextColor(getResources().getColor(R.color.black), getResources().getColor(R.color.red_selected));
+        tab_mine.setIcon(R.mipmap.icon_mine_normal,R.mipmap.icon_mine_select);
+        tab_mine.setTextColor(Color.parseColor("#FFFFFFFF"),Color.parseColor("#d81e06"));
         tab_mine.setOnClickListener(this);
 
         // 默认显示第一个主页
@@ -160,16 +164,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
          switch (v.getId()) {
 
-             case R.id.ll_tab_news:
-                 tabAdapter.checkedIndex(0);
-                 selectTab(tab_news);
-                 //AppContext.getInstance().tabIndex = 0;
-                 break;
              case R.id.ll_tab_chat:
                  //首页
-                 tabAdapter.checkedIndex(1);
+                 tabAdapter.checkedIndex(0);
                  selectTab(tab_chat);
                  //AppContext.getInstance().tabIndex = 1;
+                 break;
+             case R.id.ll_tab_address_book:
+                 tabAdapter.checkedIndex(1);
+                 selectTab(tab_news);
+                 //AppContext.getInstance().tabIndex = 0;
                  break;
              case R.id.ll_tab_publish:
                  tabAdapter.checkedIndex(2);
@@ -208,17 +212,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private List<Fragment> getFragments() {
         List<Fragment> list = new ArrayList<Fragment>();
 
-        //审批主页
-        list.add(new NewsFragment());
-
-        //文件列表主页
-        list.add(new ChatFragment());
-
-        //导入文件
-        list.add(new PublishFragment());
+        //会话
+        list.add(new LCIMConversationListFragment());
 
         //通讯录
-        list.add(new MarketsFragment());
+        list.add(new AddressBookFragment());
+
+        //新闻
+        list.add(new NewsFragment());
+
+        //二手市场
+        list.add(new PublishFragment());
 
         //我的
         list.add(new MineFragment());

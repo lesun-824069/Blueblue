@@ -40,4 +40,22 @@ public class BaseFragment extends Fragment {
         super.onDestroy();
         Log.e(TAG, "onDestroy: "+this.getClass().toString() );
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.e(TAG, "onDestroyView: "+this.getClass().toString() );
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e(TAG, "onPause: "+this.getClass() );
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.e(TAG, "onStart: "+this.getClass() );
+    }
 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.gao.blueblue.R;
 import com.gao.blueblue.ui.activity.base.BaseActivity;
 import com.gao.blueblue.ui.activity.login.LoginActivity;
+import com.gao.blueblue.ui.activity.login.LoginBySMSActivity;
 import com.gao.blueblue.utils.PreferenceUtil;
 
 import butterknife.BindView;
@@ -49,7 +50,7 @@ public class SettingsActivity extends BaseActivity {
      private void logout() {
         LCUser.logOut();
         PreferenceUtil.putBoolean(PreferenceUtil.MapName.LOGIN, PreferenceUtil.PreKey.AUTO_LOGIN, false);
-        startActivity(new Intent(mContext, LoginActivity.class));
+        startActivity(new Intent(mContext, LoginBySMSActivity.class));
         finish();
     }
 
